@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .has-error {
+            color:#ff0000;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="form-group" data-bind="css:{'has-error':name.isDirty}">
+            <label>Your name:</label>
+            <input data-bind="value:name" />
+        </div>
+    </div>
+
+    <div>
+        <span class="text-danger" data-bind="visible:nameDirty.isDirty()">You must enter a full name!</span>
+        <div class="form-group" data-bind="css:{'has-error':firstname.isDirty}">
+            <label>First name:</label>
+            <input data-bind="value:firstname" />
+        </div>
+        <div class="form-group" data-bind="css:{'has-error':lastname.isDirty}">
+            <label>Last name:</label>
+            <input data-bind="value:lastname" />
+        </div>
+        <select data-bind="options:items,value:selectedItem,optionsText:'Value',optionsValue:'Code',css:{'has-error':selectedItem.isDirty}"></select>
+        <input type="checkbox" data-bind="checked:isChecked" />
+        <button type="button" data-bind="click:function() { name.reset();}">Reset Simple Name</button>
+        <button type="button" data-bind="click:function() { nameDirty.reset();}">Reset Full Name</button>
+        <button type="button" data-bind="click:function() { nameDirty.reset('FN.Who','1');}">Reset Dropdown to TEst</button>
+
+    </div>
+    <script src="knockout-latest.debug.js"></script>
+    <script src="dirtyFlag2.js"></script>
+    <script>
+        var vm = function () {
+            this.name = ko.observable("Joe Smith").extend({ dirtyFlag: "" });
+
+            this.nameDirty = new dirtyFlag2("FN");
+            this.firstname = ko.observable("Joe").extend({ dirtyFlag: { key: "FN.First" } });
+            this.lastname = ko.observable("Smith").extend({ dirtyFlag: { key: "FN.Last" } });
+            this.isChecked = ko.observable(true).extend({ dirtyFlag: { key: "FN.Check" } });
+            this.items = [
+                { Code: "1", Value: "TEst" },
+                { Code: 2, Value: "Me" },
+                { Code: "3", Value: "NOne" }
+            ];
+            this.selectedItem = ko.observable(2).extend({
+                dirtyFlag: { key: "FN.Who" }
+            });
+            this.selectedObj = ko.pureComputed(function () {
+                return ko.utils.arrayFirst(this.items, function (i) {
+                    return i.Code === this.selectedItem();
+                }, this);
+            }, this);
+            this.selectedObj.subscribe(function (obj) {
+                console.log(JSON.stringify(obj));
+            });
+
+            return this;
+        }
+        ko.applyBindings(new vm());
+    </script>
+</body>
+</html>
