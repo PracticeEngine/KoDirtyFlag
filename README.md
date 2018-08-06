@@ -59,6 +59,9 @@ var vm = function() {
   ...
   this.pageDirty.reset();
   ...
+  // or just the contact part
+  this.contactDirty.reset();
+  ...
 };
 ```
 
