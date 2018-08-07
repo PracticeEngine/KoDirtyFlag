@@ -1,4 +1,5 @@
-﻿type DirtyTrackedObs = KnockoutObservable<any> & IDirtyItem;
+﻿import * as ko from "knockout";
+type DirtyTrackedObs = KnockoutObservable<any> & IDirtyItem;
 
 interface IDirtyItem {
     clean: KnockoutObservable<any>;
@@ -19,7 +20,7 @@ interface IDirtyFlagOptions {
 var dirtyKeyRoots: Array<string> = [];
 var dirtyReg : KnockoutObservableArray<IDirtyReg> = ko.observableArray([]);
 
-class dirtyFlag2 {
+export class dirtyFlag2 {
     private key: string;
     isDirty: KnockoutObservable<boolean>;
     constructor(key: string) {

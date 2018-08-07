@@ -7,7 +7,7 @@
     "sourceMap": true,
     "target": "es5",
     "outDir": "wwwroot",
-    "module": "none"
+    "module": "commonjs"
   },
   "exclude": [
     "node_modules",

@@ -6,6 +6,10 @@
     "knockout": "^3.4.2",
     "@types/knockout": "^3.4.58",
     "qunit": "^2.6.1",
-    "@types/qunit": "^2.5.2"
+    "@types/qunit": "^2.5.2",
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^4.0.0",
+    "typescript": "^3.0.1",
+    "gulp-sourcemaps": "^2.6.4"
   }
 }
