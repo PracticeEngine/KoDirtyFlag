@@ -4,15 +4,6 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps');
 
 
-gulp.task('es5', function () {
-    var tsProject = ts.createProject('tsconfig.json', { module: 'commonjs',target:'es5' });
-    return gulp.src('*.ts')
-        .pipe(sourcemaps.init())
-        .pipe(tsProject())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('wwwroot/es5'));
-});
-
 gulp.task('amd', function () {
     var tsProject = ts.createProject('tsconfig.json', { module: 'amd', target: 'es5' });
     return gulp.src('*.ts')
@@ -31,6 +22,6 @@ gulp.task('harmony', function () {
         .pipe(gulp.dest('wwwroot/harmony'));
 });
 
-gulp.task('default', ['es5', 'amd', 'harmony'], function () {
-    gulp.watch('*.ts', ['default']);
+gulp.task('default', ['amd', 'harmony'], function () {
+    gulp.watch('*.ts', ['amd','harmony']);
 });
