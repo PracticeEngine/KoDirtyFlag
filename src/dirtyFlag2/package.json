@@ -4,6 +4,8 @@
   "private": true,
   "devDependencies": {
     "knockout": "^3.4.2",
-    "@types/knockout": "^3.4.58"
+    "@types/knockout": "^3.4.58",
+    "qunit": "^2.6.1",
+    "@types/qunit": "^2.5.2"
   }
 }

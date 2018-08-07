@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\tests.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="dirtyFlag2.ts" />
   </ItemGroup>
 
@@ -15,6 +19,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="dirtyFlag2.ts" />
+    <TypeScriptCompile Include="tests.ts" />
   </ItemGroup>
 
 </Project>
