@@ -51,4 +51,17 @@ QUnit.test("Extend With Key, existing dirtyFlag2 instance, duplicate key", funct
     }, "trying to re-register key");
     df.dispose();
 });
+///Array observable tests
+QUnit.test("Simple array extend test", function (assert) {
+    var names;
+    names = ko.observableArray(["Joe Smith"]).extend({ dirtyFlag: {} });
+    assert.ok(names["isDirty"]() === false, "Initialised as clean");
+    names.push("John");
+    assert.ok(names["isDirty"]() === true, "Updated Now Dirty");
+    name["reset"]();
+    assert.ok(names["isDirty"]() === false, "Reset OK");
+    //assert.ok(name() === "John", "Value Unchanged OK");
+    names(["Mark"]);
+    assert.ok(name["isDirty"]() === true, "Updated again Now Dirty");
+});
 //# sourceMappingURL=tests.js.map
