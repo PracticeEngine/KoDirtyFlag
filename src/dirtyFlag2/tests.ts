@@ -1,4 +1,6 @@
-﻿QUnit.test("Simple extend test", function (assert) {
+﻿import { dirtyFlag2 } from "dirtyFlag2";
+
+QUnit.test("Simple extend test", function (assert) {
     var name: KnockoutObservable<string>;
     name = ko.observable("Joe Smith").extend({ dirtyFlag: {} });
 
