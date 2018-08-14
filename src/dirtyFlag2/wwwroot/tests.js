@@ -10,6 +10,8 @@ QUnit.test("Simple extend test", function (assert) {
     assert.ok(name() === "John", "Value Unchanged OK");
     name("Mark");
     assert.ok(name["isDirty"]() === true, "Updated again Now Dirty");
+    name("John");
+    assert.ok(name["isDirty"]() === false, "Original value re-entered Now Clean");
 });
 QUnit.test("Simple extend with object", function (assert) {
     var name;
@@ -41,7 +43,43 @@ QUnit.test("Extend With Key, existing dirtyFlag2 instance, test simple functiona
     assert.ok(name() === "John", "Value Unchanged OK");
     name("Mark");
     assert.ok(name["isDirty"]() === true, "Updated again Now Dirty");
+    name("John");
+    assert.ok(name["isDirty"]() === false, "Original value re-entered Now Clean");
     df.dispose();
+});
+QUnit.test("Extend With Key, existing dirtyFlag2 instance, test dirtyFlag2 functionality", function (assert) {
+    var name;
+    var address;
+    var df = new dirtyFlag2("Tests1");
+    name = ko.observable("Joe Smith").extend({ dirtyFlag: { key: "Tests1.name" } });
+    address = ko.observable("1 High Street").extend({ dirtyFlag: { key: "Tests1.address" } });
+    assert.ok(name["isDirty"]() === false, "Initialised as clean");
+    name("John");
+    assert.ok(df.isDirty() === true, "Updated Now Dirty");
+    df.reset();
+    assert.ok(df.isDirty() === false, "Reset OK");
+    assert.ok(name() === "John", "Value Unchanged OK");
+    name("Mark");
+    assert.ok(df.isDirty() === true, "Updated again Now Dirty");
+    name("John");
+    assert.ok(df.isDirty() === false, "Original value re-entered Now Clean");
+    name("Mark");
+    assert.ok(df.isDirty() === true, "Updated again Now Dirty");
+    df.reset("Tests1.address");
+    assert.ok(df.isDirty() === true, "Reset another, still Dirty");
+    df.reset("Tests1.name", "Paul");
+    assert.ok(df.isDirty() === true, "Reset OK");
+    assert.ok(name() === "Paul", "Value Changed OK");
+    assert.throws(function () {
+        df.reset("another");
+    }, "Throws if resetting unknown root key");
+    assert.throws(function () {
+        df.reset("Tests.another");
+    }, "Throws if resetting unknown leaf key");
+    df.dispose();
+    assert.throws(function () {
+        df.dispose();
+    }, "Throws if double disposal");
 });
 QUnit.test("Extend With Key, existing dirtyFlag2 instance, duplicate key", function (assert) {
     var name;
@@ -64,5 +102,7 @@ QUnit.test("Simple array extend test", function (assert) {
     //assert.ok(name() === "John", "Value Unchanged OK");
     names(["Joe Smith"]);
     assert.ok(names["isDirty"]() === true, "Updated again Now Dirty");
+    names.push("John");
+    assert.ok(names["isDirty"]() === false, "Array updated to match previously clean content, now clean.");
 });
 //# sourceMappingURL=tests.js.map
